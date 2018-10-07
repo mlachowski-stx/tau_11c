@@ -1,16 +1,16 @@
-package pl.homeBudget.app.domain;
+package pl.homeBudget.app.labone.domain;
 
 public class Category {
 
-    private int id;
+    private long id;
     private String name;
     private String displayColor;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
