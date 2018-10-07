@@ -6,10 +6,10 @@ import java.util.List;
 
 interface CategoryManager {
 
-    public long createCategory(Category category);
+    public int createCategory(Category category);
     public boolean deleteCategory(Category category);
     public boolean updateCategory(Category category);
-    public Category getCategory(long id);
+    public Category getCategory(int id);
     public List<Category> getAllCategories();
 
 }

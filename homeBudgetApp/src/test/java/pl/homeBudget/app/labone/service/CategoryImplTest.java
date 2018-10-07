@@ -15,24 +15,31 @@ public class CategoryImplTest {
 
     @Before
     public void before(){
-        CategoryImpl database = new CategoryImpl();
+        this.database = new CategoryImpl();
     }
 
     @Test
-    public void checkCorrectDatabaseInitialization(){
+    public void checkCorrectInitializeDatabase(){
         assertNotNull(database);
     }
 
     @Test
-    public void checkCorrectCategoryCreation(){
+    public void checkCorrectCreateCategory(){
         database.createCategory(new Category("Cat 1"));
         assertEquals(1, database.getAllCategories().size());
     }
 
     @Test
-    public void checkCorrectCategoryGet(){
-        long cat1 = database.createCategory(new Category("Cat 1"));
-        long cat2 = database.createCategory(new Category("Cat 2"));
-        assertEquals("Cat 2", database.getCategory(cat2).getName());
+    public void checkCorrectGetCategory(){
+        int id = database.createCategory(new Category("Cat 1"));
+        assertEquals("Cat 1", database.getCategory(id).getName());
+        assertEquals(id, database.getCategory(id).getId());
+    }
+
+    @Test
+    public void checkCorrectGetAll(){
+        database.createCategory(new Category("Cat 1"));
+        database.createCategory(new Category("Cat 2"));
+        assertEquals(2, database.getAllCategories().size());
     }
 }
