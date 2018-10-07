@@ -24,7 +24,8 @@ public class CategoryImpl implements CategoryManager {
     }
 
     public boolean updateCategory(Category category){
-        return false;
+        this.db.set(category.getId(), category);
+        return true;
     }
 
     public Category getCategory(int id){
