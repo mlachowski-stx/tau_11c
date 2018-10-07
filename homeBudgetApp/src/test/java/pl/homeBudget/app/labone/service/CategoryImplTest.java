@@ -42,4 +42,16 @@ public class CategoryImplTest {
         database.createCategory(new Category("Cat 2"));
         assertEquals(2, database.getAllCategories().size());
     }
+
+    @Test
+    public void checkCorrectUpdate(){
+        int id = database.createCategory(new Category("Cat 1"));
+        Category createdCategory = database.getCategory(id);
+        createdCategory.setName("New name");
+        boolean result = database.updateCategory(createdCategory);
+
+        assertTrue(result);
+        assertEquals("New name", database.getCategory(id).getName());
+    }
+
 }
