@@ -21,7 +21,7 @@ public class CategoryImpl implements CategoryManager {
     }
 
     public Category getCategory(long id){
-        return new Category();
+        return new Category("");
     }
 
     public List<Category> getAllCategories(){

@@ -6,6 +6,10 @@ public class Category {
     private String name;
     private String displayColor;
 
+    public Category(String name){
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }

@@ -19,7 +19,20 @@ public class CategoryImplTest {
     }
 
     @Test
-    public void checkCreate(){
+    public void checkCorrectDatabaseInitialization(){
         assertNotNull(database);
+    }
+
+    @Test
+    public void checkCorrectCategoryCreation(){
+        database.createCategory(new Category("Cat 1"));
+        assertEquals(1, database.getAllCategories().size());
+    }
+
+    @Test
+    public void checkCorrectCategoryGet(){
+        long cat1 = database.createCategory(new Category("Cat 1"));
+        long cat2 = database.createCategory(new Category("Cat 2"));
+        assertEquals("Cat 2", database.getCategory(cat2).getName());
     }
 }
