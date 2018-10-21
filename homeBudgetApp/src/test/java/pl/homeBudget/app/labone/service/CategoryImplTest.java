@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 
 import pl.homeBudget.app.labone.domain.Category;
@@ -19,9 +18,6 @@ import static org.junit.Assert.*;
 public class CategoryImplTest {
 
     private CategoryImpl database;
-
-    @Mock
-    TimeSource timeSource;
 
     @Before
     public void before(){
@@ -42,7 +38,8 @@ public class CategoryImplTest {
     @Test
     public void checkCorrectSetCreatedDate(){
         Date created = new Date();
-        when(timeSource.getCurrentTime()).thenReturn(created);
+        TimeSource ts = mock(TimeSource.class);
+        when(ts.getCurrentTime()).thenReturn(created);
 
         int id = database.createCategory(new Category(1,"Cat 1"));
         Category c = database.getCategory(id);
@@ -65,7 +62,8 @@ public class CategoryImplTest {
     @Test
     public void checkCorrectSetLastReadDate(){
         Date lastRead = new Date();
-        when(timeSource.getCurrentTime()).thenReturn(lastRead);
+        TimeSource ts = mock(TimeSource.class);
+        when(ts.getCurrentTime()).thenReturn(lastRead);
 
         int id = database.createCategory(new Category(1,"Cat 1"));
         Category c = database.getCategory(id);
@@ -100,7 +98,8 @@ public class CategoryImplTest {
     @Test
     public void checkCorrectSetLastModifiedDate(){
         Date lastModified = new Date();
-        when(timeSource.getCurrentTime()).thenReturn(lastModified);
+        TimeSource ts = mock(TimeSource.class);
+        when(ts.getCurrentTime()).thenReturn(lastModified);
 
         int id = database.createCategory(new Category(1,"Cat 1"));
         Category createdCategory = database.getCategory(id);

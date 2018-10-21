@@ -1,6 +1,7 @@
 package pl.homeBudget.app.labone.service;
 
 import pl.homeBudget.app.labone.domain.Category;
+import pl.homeBudget.app.labone.domain.TimeSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +10,15 @@ import java.util.NoSuchElementException;
 public class CategoryImpl implements CategoryManager {
 
     private ArrayList<Category> db;
+    private TimeSource ts;
 
     CategoryImpl(){
         this.db = new ArrayList<Category>();
+        this.ts = new TimeSource();
     }
 
     public int createCategory(Category category){
+        category.setCreated(this.ts.getCurrentTime());
         this.db.add(category);
         return category.getId();
     }
