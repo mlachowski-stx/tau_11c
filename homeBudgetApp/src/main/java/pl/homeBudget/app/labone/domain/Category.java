@@ -6,7 +6,8 @@ public class Category {
     private String name;
     private String displayColor;
 
-    public Category(String name){
+    public Category(int id, String name){
+        this.id = id;
         this.name = name;
     }
 

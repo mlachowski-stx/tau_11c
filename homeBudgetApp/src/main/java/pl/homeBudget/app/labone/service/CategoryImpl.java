@@ -14,7 +14,6 @@ public class CategoryImpl implements CategoryManager {
     }
 
     public int createCategory(Category category){
-        category.setId(this.db.size());
         this.db.add(category);
         return category.getId();
     }
