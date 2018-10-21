@@ -37,6 +37,12 @@ public class CategoryImplTest {
     }
 
     @Test
+    public void checkGetCategoryReturnFalseForNonExistingCategory(){
+        Category result = database.getCategory(1);
+        assertNull(result);
+    }
+
+    @Test
     public void checkCorrectGetAll(){
         database.createCategory(new Category(1,"Cat 1"));
         database.createCategory(new Category(1,"Cat 2"));
@@ -63,6 +69,26 @@ public class CategoryImplTest {
 
         assertTrue(result);
         assertEquals(0, database.getAllCategories().size());
+    }
+
+    @Test
+    public void checkCorrectDeleteWithMultipleCategoriesInDb(){
+        int idFirst = database.createCategory(new Category(1, "Cat 1"));
+        int idSecond = database.createCategory(new Category(2, "Cat 2"));
+        Category createdCategory = database.getCategory(idFirst);
+        createdCategory.setName("New name");
+        boolean result = database.deleteCategory(createdCategory);
+
+        assertTrue(result);
+        assertEquals(1, database.getAllCategories().size());
+        assertEquals("Cat 2", database.getCategory(idSecond).getName());
+    }
+
+    @Test
+    public void checkDeleteCategoryReturnFalseForNonExistingCategory(){
+        boolean result = database.deleteCategory(new Category(1, "Cat 1"));
+
+        assertFalse(result);
     }
 
 }

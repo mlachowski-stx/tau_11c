@@ -19,16 +19,33 @@ public class CategoryImpl implements CategoryManager {
     }
 
     public boolean deleteCategory(Category category){
+        for (int i = 0; i < db.size(); i ++) {
+            if (db.get(i).getId() == category.getId()){
+                this.db.remove(i);
+                return true;
+            }
+        }
         return false;
     }
 
     public boolean updateCategory(Category category){
-        this.db.set(category.getId(), category);
-        return true;
+        for (int i = 0; i < db.size(); i ++) {
+            if (db.get(i).getId() == category.getId()){
+                this.db.set(i, category);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Category getCategory(int id){
-        return db.get(id);
+        for (Category c: db){
+            if (c.getId() == id){
+                return c;
+            }
+        }
+        return null;
     }
 
     public List<Category> getAllCategories(){
