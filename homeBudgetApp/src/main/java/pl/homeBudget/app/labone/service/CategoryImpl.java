@@ -4,6 +4,7 @@ import pl.homeBudget.app.labone.domain.Category;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class CategoryImpl implements CategoryManager {
 
@@ -25,7 +26,7 @@ public class CategoryImpl implements CategoryManager {
                 return true;
             }
         }
-        return false;
+        throw new NoSuchElementException();
     }
 
     public boolean updateCategory(Category category){
@@ -35,17 +36,16 @@ public class CategoryImpl implements CategoryManager {
                 return true;
             }
         }
-
-        return false;
+        throw new NoSuchElementException();
     }
 
-    public Category getCategory(int id){
+    public Category getCategory(int id) throws NoSuchElementException {
         for (Category c: db){
             if (c.getId() == id){
                 return c;
             }
         }
-        return null;
+        throw new NoSuchElementException();
     }
 
     public List<Category> getAllCategories(){
