@@ -11,6 +11,9 @@ public class CategoryImpl implements CategoryManager {
 
     private ArrayList<Category> db;
     private TimeSource ts;
+    private boolean saveCreated = true;
+    private boolean saveLastRead = true;
+    private boolean saveLastModified = true;
 
     CategoryImpl(TimeSource ts){
         this.db = new ArrayList<Category>();
@@ -56,5 +59,17 @@ public class CategoryImpl implements CategoryManager {
 
     public List<Category> getAllCategories(){
         return db;
+    }
+
+    public void setSaveCreated(boolean saveCreated) {
+        this.saveCreated = saveCreated;
+    }
+
+    public void setSaveLastRead(boolean saveLastRead) {
+        this.saveLastRead = saveLastRead;
+    }
+
+    public void setSaveLastModified(boolean saveLastModified) {
+        this.saveLastModified = saveLastModified;
     }
 }

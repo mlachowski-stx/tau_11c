@@ -103,13 +103,32 @@ public class CategoryImplTest {
         Date lastModified = new Date();
         when(ts.getCurrentTime()).thenReturn(lastModified);
 
-        int id = database.createCategory(new Category(1,"Cat 1"));
+        Category c = createdAndModifyCategory(null);
+
+        assertEquals(lastModified, c.getLastModified());
+    }
+
+    @Test
+    public void checkNotSetLastModifiedDate(){
+        database.setSaveCreated(false);
+        Date oldLastModified = new Date(1990);
+        Date lastModified = new Date();
+        when(ts.getCurrentTime()).thenReturn(lastModified);
+        Category c = createdAndModifyCategory(oldLastModified);
+
+        assertEquals(oldLastModified, c.getLastModified());
+    }
+
+    private Category createdAndModifyCategory(Date date){
+        Category cc = new Category(1,"Cat 1");
+        if(date != null){
+            cc.setLastModified(date);
+        }
+        int id = database.createCategory(cc);
         Category createdCategory = database.getCategory(id);
         createdCategory.setName("New name");
         database.updateCategory(createdCategory);
-        Category c = database.getCategory(id);
-
-        assertEquals(lastModified, c.getLastModified());
+        return database.getCategory(id);
     }
 
     @Test
