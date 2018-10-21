@@ -52,7 +52,9 @@ public class CategoryImpl implements CategoryManager {
     public Category getCategory(int id) throws NoSuchElementException {
         for (Category c: db){
             if (c.getId() == id){
-                c.setLastRead(ts.getCurrentTime());
+                if(saveLastRead) {
+                    c.setLastRead(ts.getCurrentTime());
+                }
                 return c;
             }
         }
