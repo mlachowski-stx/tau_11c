@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
 public class CategoryImplTest {
 
     private CategoryImpl database;
+    private int testTimestamp = 1540118425;
 
     @Mock TimeSource ts;
 
@@ -75,6 +76,21 @@ public class CategoryImplTest {
     }
 
     @Test
+    public void checkNotSetLastReadDate(){
+        database.setSaveLastRead(false);
+        Date oldLastRead = new Date(testTimestamp);
+        Date lastRead = new Date();
+        when(ts.getCurrentTime()).thenReturn(lastRead);
+
+        Category cc = new Category(1,"Cat 1");
+        cc.setLastRead(oldLastRead);
+        int id = database.createCategory(cc);
+        Category c = database.getCategory(id);
+
+        assertEquals(oldLastRead, c.getLastRead());
+    }
+
+    @Test
     public void checkCorrectGetAll(){
         database.createCategory(new Category(1,"Cat 1"));
         database.createCategory(new Category(1,"Cat 2"));
@@ -111,7 +127,7 @@ public class CategoryImplTest {
     @Test
     public void checkNotSetLastModifiedDate(){
         database.setSaveLastModified(false);
-        Date oldLastModified = new Date(1540118425);
+        Date oldLastModified = new Date(testTimestamp);
         Date lastModified = new Date();
         when(ts.getCurrentTime()).thenReturn(lastModified);
         Category c = createdAndModifyCategory(oldLastModified);
