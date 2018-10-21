@@ -4,8 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import pl.homeBudget.app.labone.domain.Category;
+import org.mockito.Mock;
+import static org.mockito.Mockito.*;
 
+import pl.homeBudget.app.labone.domain.Category;
+import pl.homeBudget.app.labone.domain.TimeSource;
+
+import java.util.Date;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
@@ -14,6 +19,9 @@ import static org.junit.Assert.*;
 public class CategoryImplTest {
 
     private CategoryImpl database;
+
+    @Mock
+    TimeSource timeSource;
 
     @Before
     public void before(){
@@ -32,6 +40,17 @@ public class CategoryImplTest {
     }
 
     @Test
+    public void checkCorrectSetCreatedDate(){
+        Date created = new Date();
+        when(timeSource.getCurrentTime()).thenReturn(created);
+
+        int id = database.createCategory(new Category(1,"Cat 1"));
+        Category c = database.getCategory(id);
+
+        assertEquals(created, c.getCreated());
+    }
+
+    @Test
     public void checkCorrectGetCategory(){
         int id = database.createCategory(new Category(1,"Cat 1"));
         assertEquals("Cat 1", database.getCategory(id).getName());
@@ -41,6 +60,17 @@ public class CategoryImplTest {
     @Test(expected = NoSuchElementException.class)
     public void checkGetCategoryThrowsExceptionForNonExistingCategory(){
         database.getCategory(1);
+    }
+
+    @Test
+    public void checkCorrectSetLastReadDate(){
+        Date lastRead = new Date();
+        when(timeSource.getCurrentTime()).thenReturn(lastRead);
+
+        int id = database.createCategory(new Category(1,"Cat 1"));
+        Category c = database.getCategory(id);
+
+        assertEquals(lastRead, c.getLastRead());
     }
 
     @Test
@@ -68,6 +98,20 @@ public class CategoryImplTest {
     }
 
     @Test
+    public void checkCorrectSetLastModifiedDate(){
+        Date lastModified = new Date();
+        when(timeSource.getCurrentTime()).thenReturn(lastModified);
+
+        int id = database.createCategory(new Category(1,"Cat 1"));
+        Category createdCategory = database.getCategory(id);
+        createdCategory.setName("New name");
+        database.updateCategory(createdCategory);
+        Category c = database.getCategory(id);
+
+        assertEquals(lastModified, c.getLastModified());
+    }
+
+    @Test
     public void checkCorrectDelete(){
         int id = database.createCategory(new Category(1, "Cat 1"));
         Category createdCategory = database.getCategory(id);
@@ -92,8 +136,7 @@ public class CategoryImplTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void checkDeleteCategoryThrowsExceptionForNonExistingCategory(){
+    public void checkDeleteCategoryThrowsExceptionForNonExistingCategory() {
         database.deleteCategory(new Category(1, "Cat 1"));
     }
-
 }
