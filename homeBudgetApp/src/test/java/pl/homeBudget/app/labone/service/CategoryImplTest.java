@@ -110,8 +110,8 @@ public class CategoryImplTest {
 
     @Test
     public void checkNotSetLastModifiedDate(){
-        database.setSaveCreated(false);
-        Date oldLastModified = new Date(1990);
+        database.setSaveLastModified(false);
+        Date oldLastModified = new Date(1540118425);
         Date lastModified = new Date();
         when(ts.getCurrentTime()).thenReturn(lastModified);
         Category c = createdAndModifyCategory(oldLastModified);

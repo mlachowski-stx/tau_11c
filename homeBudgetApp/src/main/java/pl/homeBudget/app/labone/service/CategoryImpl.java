@@ -39,7 +39,9 @@ public class CategoryImpl implements CategoryManager {
     public boolean updateCategory(Category category){
         for (int i = 0; i < db.size(); i ++) {
             if (db.get(i).getId() == category.getId()){
-                category.setLastModified(ts.getCurrentTime());
+                if(saveLastModified) {
+                    category.setLastModified(ts.getCurrentTime());
+                }
                 this.db.set(i, category);
                 return true;
             }
