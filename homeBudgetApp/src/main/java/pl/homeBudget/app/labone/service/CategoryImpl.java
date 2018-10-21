@@ -12,9 +12,9 @@ public class CategoryImpl implements CategoryManager {
     private ArrayList<Category> db;
     private TimeSource ts;
 
-    CategoryImpl(){
+    CategoryImpl(TimeSource ts){
         this.db = new ArrayList<Category>();
-        this.ts = new TimeSource();
+        this.ts = ts;
     }
 
     public int createCategory(Category category){
@@ -36,6 +36,7 @@ public class CategoryImpl implements CategoryManager {
     public boolean updateCategory(Category category){
         for (int i = 0; i < db.size(); i ++) {
             if (db.get(i).getId() == category.getId()){
+                category.setLastModified(ts.getCurrentTime());
                 this.db.set(i, category);
                 return true;
             }
@@ -46,6 +47,7 @@ public class CategoryImpl implements CategoryManager {
     public Category getCategory(int id) throws NoSuchElementException {
         for (Category c: db){
             if (c.getId() == id){
+                c.setLastRead(ts.getCurrentTime());
                 return c;
             }
         }

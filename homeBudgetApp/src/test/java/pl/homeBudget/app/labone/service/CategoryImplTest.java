@@ -1,10 +1,13 @@
 package pl.homeBudget.app.labone.service;
 
+import static org.mockito.Mockito.*;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import static org.mockito.Mockito.*;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import pl.homeBudget.app.labone.domain.Category;
 import pl.homeBudget.app.labone.domain.TimeSource;
@@ -14,14 +17,16 @@ import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
-@RunWith(JUnit4.class)
+@RunWith(MockitoJUnitRunner.class)
 public class CategoryImplTest {
 
     private CategoryImpl database;
 
+    @Mock TimeSource ts;
+
     @Before
     public void before(){
-        this.database = new CategoryImpl();
+        this.database = new CategoryImpl(ts);
     }
 
     @Test
@@ -38,7 +43,6 @@ public class CategoryImplTest {
     @Test
     public void checkCorrectSetCreatedDate(){
         Date created = new Date();
-        TimeSource ts = mock(TimeSource.class);
         when(ts.getCurrentTime()).thenReturn(created);
 
         int id = database.createCategory(new Category(1,"Cat 1"));
@@ -62,7 +66,6 @@ public class CategoryImplTest {
     @Test
     public void checkCorrectSetLastReadDate(){
         Date lastRead = new Date();
-        TimeSource ts = mock(TimeSource.class);
         when(ts.getCurrentTime()).thenReturn(lastRead);
 
         int id = database.createCategory(new Category(1,"Cat 1"));
@@ -98,7 +101,6 @@ public class CategoryImplTest {
     @Test
     public void checkCorrectSetLastModifiedDate(){
         Date lastModified = new Date();
-        TimeSource ts = mock(TimeSource.class);
         when(ts.getCurrentTime()).thenReturn(lastModified);
 
         int id = database.createCategory(new Category(1,"Cat 1"));
