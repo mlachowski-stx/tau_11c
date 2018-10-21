@@ -53,6 +53,21 @@ public class CategoryImplTest {
     }
 
     @Test
+    public void checkNotSetCreatedDate(){
+        database.setSaveCreated(false);
+        Date oldCreated = new Date(testTimestamp);
+        Date created = new Date();
+        when(ts.getCurrentTime()).thenReturn(created);
+
+        Category cc = new Category(1,"Cat 1");
+        cc.setCreated(oldCreated);
+        int id = database.createCategory(cc);
+        Category c = database.getCategory(id);
+
+        assertEquals(oldCreated, c.getCreated());
+    }
+
+    @Test
     public void checkCorrectGetCategory(){
         int id = database.createCategory(new Category(1,"Cat 1"));
         assertEquals("Cat 1", database.getCategory(id).getName());
