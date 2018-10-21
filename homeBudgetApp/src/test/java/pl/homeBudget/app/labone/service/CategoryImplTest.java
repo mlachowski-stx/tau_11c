@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import pl.homeBudget.app.labone.domain.Category;
 
+import java.util.NoSuchElementException;
+
 import static org.junit.Assert.*;
 
 @RunWith(JUnit4.class)
@@ -36,10 +38,9 @@ public class CategoryImplTest {
         assertEquals(id, database.getCategory(id).getId());
     }
 
-    @Test
-    public void checkGetCategoryReturnFalseForNonExistingCategory(){
-        Category result = database.getCategory(1);
-        assertNull(result);
+    @Test(expected = NoSuchElementException.class)
+    public void checkGetCategoryThrowsExceptionForNonExistingCategory(){
+        database.getCategory(1);
     }
 
     @Test
@@ -58,6 +59,12 @@ public class CategoryImplTest {
 
         assertTrue(result);
         assertEquals("New name", database.getCategory(id).getName());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void checkUpdateThrowsExceptionForNonExistingCategory(){
+        Category c = new Category(1,"Cat 1");
+        database.updateCategory(c);
     }
 
     @Test
@@ -84,11 +91,9 @@ public class CategoryImplTest {
         assertEquals("Cat 2", database.getCategory(idSecond).getName());
     }
 
-    @Test
-    public void checkDeleteCategoryReturnFalseForNonExistingCategory(){
-        boolean result = database.deleteCategory(new Category(1, "Cat 1"));
-
-        assertFalse(result);
+    @Test(expected = NoSuchElementException.class)
+    public void checkDeleteCategoryThrowsExceptionForNonExistingCategory(){
+        database.deleteCategory(new Category(1, "Cat 1"));
     }
 
 }
