@@ -1,4 +1,4 @@
-package pl.homeBudget.app.labone.domain;
+package pl.homeBudget.app.domain;
 
 import java.util.Date;
 

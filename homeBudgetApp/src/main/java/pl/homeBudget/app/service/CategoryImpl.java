@@ -1,7 +1,7 @@
-package pl.homeBudget.app.labone.service;
+package pl.homeBudget.app.service;
 
-import pl.homeBudget.app.labone.domain.Category;
-import pl.homeBudget.app.labone.domain.TimeSource;
+import pl.homeBudget.app.domain.Category;
+import pl.homeBudget.app.domain.TimeSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,9 @@ public class CategoryImpl implements CategoryManager {
     }
 
     public int createCategory(Category category){
-        category.setCreated(this.ts.getCurrentTime());
+        if(saveCreated) {
+            category.setCreated(this.ts.getCurrentTime());
+        }
         this.db.add(category);
         return category.getId();
     }

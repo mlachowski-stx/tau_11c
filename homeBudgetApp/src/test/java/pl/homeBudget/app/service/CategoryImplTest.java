@@ -1,16 +1,15 @@
-package pl.homeBudget.app.labone.service;
+package pl.homeBudget.app.service;
 
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import pl.homeBudget.app.labone.domain.Category;
-import pl.homeBudget.app.labone.domain.TimeSource;
+import pl.homeBudget.app.domain.Category;
+import pl.homeBudget.app.domain.TimeSource;
 
 import java.util.Date;
 import java.util.NoSuchElementException;

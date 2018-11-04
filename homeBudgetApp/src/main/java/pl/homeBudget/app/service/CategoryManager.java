@@ -1,6 +1,6 @@
-package pl.homeBudget.app.labone.service;
+package pl.homeBudget.app.service;
 
-import pl.homeBudget.app.labone.domain.Category;
+import pl.homeBudget.app.domain.Category;
 
 import java.util.List;
 import java.util.NoSuchElementException;
