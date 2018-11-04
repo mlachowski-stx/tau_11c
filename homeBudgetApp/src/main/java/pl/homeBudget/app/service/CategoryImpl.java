@@ -39,7 +39,19 @@ public class CategoryImpl implements CategoryManager {
     }
 
     public boolean deleteCategories(List<Integer> ids){
-        return true;
+        List<Integer> deleted = new ArrayList<Integer>();
+
+        for (int i = 0; i < db.size(); i ++) {
+            if (ids.contains(db.get(i).getId())){
+                deleted.add(db.get(i).getId());
+                this.db.remove(i);
+                if (ids.size() == deleted.size()){
+                    return true;
+                }
+            }
+        }
+
+        throw new NoSuchElementException();
     }
 
     public boolean updateCategory(Category category){
