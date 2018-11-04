@@ -9,6 +9,7 @@ interface CategoryManager {
 
     public int createCategory(Category category);
     public boolean deleteCategory(Category category) throws NoSuchElementException;
+    public boolean deleteCategories(List<Integer> ids) throws NoSuchElementException;
     public boolean updateCategory(Category category) throws NoSuchElementException;
     public Category getCategory(int id) throws NoSuchElementException;
     public List<Category> getAllCategories();

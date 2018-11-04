@@ -38,6 +38,10 @@ public class CategoryImpl implements CategoryManager {
         throw new NoSuchElementException();
     }
 
+    public boolean deleteCategories(List<Integer> ids){
+        return true;
+    }
+
     public boolean updateCategory(Category category){
         for (int i = 0; i < db.size(); i ++) {
             if (db.get(i).getId() == category.getId()){

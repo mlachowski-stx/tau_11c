@@ -2,11 +2,18 @@ Feature: Deleting from database
   Sometimes you want to delete some records from database
 
   Scenario Outline: Deleting one record
-    Given I have category named <name> with id <id> in my database
-      And I have <count> example categories in my database
-    When I delete category with id <id>
-    Then There should left <count> categories
-      And There shouldn't be <id> in database
+    Given The following categories:
+      | 1 |
+      | 2 |
+      | 3 |
+      | 4 |
+    When I delete following categories:
+      | 2 |
+      | 4 |
+    Then There should left 2 categories
+      And There shouldn't be following categories in database:
+        | 2 |
+        | 4 |
 
   Examples:
     | id | name | count |

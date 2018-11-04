@@ -11,6 +11,7 @@ import pl.homeBudget.app.domain.Category;
 import pl.homeBudget.app.domain.TimeSource;
 import pl.homeBudget.app.service.CategoryImpl;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
@@ -27,22 +28,16 @@ public class StepDefinitions {
         this.database = new CategoryImpl(new TimeSource());
     }
 
-    @Given("^I have category named (.*) with id (\\d+) in my database$")
-    public void I_have_category_in_database(String name, int id) throws Throwable {
-        database.createCategory(new Category(id, name));
-    }
-
-    @Given("^I have (\\d+) example categories in my database$")
-    public void I_have_example_categories_in_database(int count) throws Throwable {
-        int size = database.getAllCategories().size();
-        for (int i = size; i < size + count; i ++) {
-            database.createCategory(new Category(i, "Test name"));
+    @Given("The following categories:")
+    public void the_following_categories(List<Integer> ids) throws Throwable {
+        for (Integer id : ids) {
+            database.createCategory(new Category(id, "Example name"));
         }
     }
 
-    @When("^I delete category with id (\\d+)$")
-    public void I_delete_category_with_id(int id) throws Throwable {
-        database.deleteCategory(database.getCategory(id));
+    @When("I delete following categories:")
+    public void I_delete_following_categories(List<Integer> ids) throws Throwable {
+        database.deleteCategories(ids);
     }
 
     @Then("^There should left (\\d+) categories$")
@@ -50,9 +45,11 @@ public class StepDefinitions {
         assertEquals(count, database.getAllCategories().size());
     }
 
-    @Then("^There shouldn't be (\\d+) in database$")
-    public void there_should_not_be_category_in_db(int id) throws Throwable {
+    @Then("There shouldn't be following categories in database:")
+    public void there_should_not_be_following_categories_in_db(List<Integer> ids) throws Throwable {
         thrown.expect(NoSuchElementException.class);
-        database.getCategory(id);
+        for (Integer id : ids) {
+            database.getCategory(id);
+        }
     }
 }
