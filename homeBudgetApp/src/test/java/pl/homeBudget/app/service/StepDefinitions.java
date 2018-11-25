@@ -15,10 +15,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class StepDefinitions {
 
     private CategoryImpl database;
+    private List<Category> searchResult;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -35,9 +37,26 @@ public class StepDefinitions {
         }
     }
 
+    @Given("I have the following categories names:")
+    public void the_following_categories_names(List<String> names) throws Throwable {
+        for (int i = 0; i < names.size(); i ++) {
+            database.createCategory(new Category(i+1, names.get(i)));
+        }
+    }
+
     @When("I delete following categories:")
     public void I_delete_following_categories(List<Integer> ids) throws Throwable {
         database.deleteCategories(ids);
+    }
+
+    @When("^I search pattern (.*)$")
+    public void I_search_pattern(String pattern) throws Throwable {
+        this.searchResult = database.search(pattern);
+    }
+
+    @Then("^I should get (\\d+) record")
+    public void I_should_get_num_records(int count) throws Throwable {
+        assertEquals(count, this.searchResult.size());
     }
 
     @Then("^There should left (\\d+) categories$")
@@ -47,9 +66,13 @@ public class StepDefinitions {
 
     @Then("There shouldn't be following categories in database:")
     public void there_should_not_be_following_categories_in_db(List<Integer> ids) throws Throwable {
-        thrown.expect(NoSuchElementException.class);
+
         for (Integer id : ids) {
-            database.getCategory(id);
+            try {
+                database.getCategory(id);
+            } catch (NoSuchElementException e) {
+
+            }
         }
     }
 }

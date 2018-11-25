@@ -13,5 +13,6 @@ interface CategoryManager {
     public boolean updateCategory(Category category) throws NoSuchElementException;
     public Category getCategory(int id) throws NoSuchElementException;
     public List<Category> getAllCategories();
+    public List<Category> search(String pattern);
 
 }

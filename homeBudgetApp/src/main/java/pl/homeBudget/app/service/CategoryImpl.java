@@ -83,6 +83,16 @@ public class CategoryImpl implements CategoryManager {
         return db;
     }
 
+    public List<Category> search(String pattern){
+        ArrayList<Category> results  = new ArrayList<Category>();
+        for (Category c: db){
+            if (c.getName().matches(pattern)){
+                results.add(c);
+            }
+        }
+        return results;
+    }
+
     public void setSaveCreated(boolean saveCreated) {
         this.saveCreated = saveCreated;
     }

@@ -1,7 +1,7 @@
 Feature: Deleting from database
   Sometimes you want to delete some records from database
 
-  Scenario Outline: Deleting one record
+  Scenario: Deleting some records
     Given The following categories:
       | 1 |
       | 2 |
@@ -14,8 +14,3 @@ Feature: Deleting from database
       And There shouldn't be following categories in database:
         | 2 |
         | 4 |
-
-  Examples:
-    | id | name | count |
-    | 1 | Income | 3 |
-    | 1 | Category 1 | 5 |
