@@ -14,3 +14,6 @@ Feature: Deleting from database
       And There shouldn't be following categories in database:
         | 2 |
         | 4 |
+      But There should be following categories in database:
+        | 1 |
+        | 3 |

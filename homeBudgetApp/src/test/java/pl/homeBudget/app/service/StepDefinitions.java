@@ -75,4 +75,12 @@ public class StepDefinitions {
             }
         }
     }
+
+    @Then("There should be following categories in database:")
+    public void there_should_be_following_categories_in_db(List<Integer> ids) throws Throwable {
+
+        for (Integer id : ids) {
+            database.getCategory(id);
+        }
+    }
 }
